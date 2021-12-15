@@ -12,6 +12,10 @@ public class Block {
         this.label = label;
     }
 
+    /**
+     * Sets the block over this one
+     * @param over the block to put over
+     */
     public void setOver(Block over) {
         this.over = over;
         if (this.over != null) {
@@ -19,26 +23,50 @@ public class Block {
         }
     }
 
-    private void setUnder(Block under) {
+    /**
+     * Sets the block under this one
+     * @param under the block under
+     */
+    public void setUnder(Block under) {
         this.under = under;
     }
 
+    /**
+     * Get if this block is on table
+     * @return wether the block is on table or not
+     */
     public boolean isOnTable() {
         return this.under == null;
     }
 
+    /**
+     * Get if block has no block over itself
+     * @return wether the block is clean or not
+     */
     public boolean isFree() {
         return this.over == null;
     }
 
+    /**
+     * Get the block over
+     * @return the block over itself
+     */
     public Block getOver() {
         return this.over;
     }
 
+    /**
+     * Get the block under
+     * @return the block under itself
+     */
     public Block getUnder() {
         return this.under;
     }
 
+    /**
+     * Get the name of the block
+     * @return the string containing the block label
+     */
     public String getLabel() {
         return this.label;
     }
@@ -47,6 +75,11 @@ public class Block {
     public boolean equals(Object other) {
         Block otherB = (Block)other;
         return this.label == otherB.getLabel();
+    }
+
+    @Override
+    public String toString() {
+        return this.label;
     }
 
 }
