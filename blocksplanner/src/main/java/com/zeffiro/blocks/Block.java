@@ -13,21 +13,22 @@ public class Block {
     }
 
     public void setOver(Block over) {
-        over.setUnder(this);
         this.over = over;
+        if (this.over != null) {
+            this.over.setUnder(this);
+        }
     }
 
-    public void setUnder(Block under) {
-        under.setOver(this);
+    private void setUnder(Block under) {
         this.under = under;
     }
 
     public boolean isOnTable() {
-        return this.under==null;
+        return this.under == null;
     }
 
     public boolean isFree() {
-        return this.over==null;
+        return this.over == null;
     }
 
     public Block getOver() {
