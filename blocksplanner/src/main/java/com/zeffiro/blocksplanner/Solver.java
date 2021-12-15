@@ -2,7 +2,11 @@ package com.zeffiro.blocksplanner;
 
 import com.zeffiro.blocks.Block;
 import com.zeffiro.blocks.TableStatus;
+import com.zeffiro.exceptions.CannotDoOperationException;
 import com.zeffiro.exceptions.IllegalBlockException;
+import com.zeffiro.operations.MoveFromTable;
+import com.zeffiro.operations.MoveOn;
+import com.zeffiro.operations.MoveToTable;
 
 public class Solver {
 
@@ -17,7 +21,31 @@ public class Solver {
     public void solve() {
 
         System.out.println(this.getInitial());
-        System.out.println(this.getFinal());
+        
+        System.out.println("\r\n Trying operations \r\n");
+
+        MoveToTable moveToTable = new MoveToTable();
+        MoveOn moveOn = new MoveOn();
+        MoveFromTable moveFromTable = new MoveFromTable();
+        
+        TableStatus op1, op2, op3;
+        try {
+            op1 = moveToTable.performOperation(this.initialStatus, "C");
+            System.out.println(op1);
+            System.out.println("\r\n ---- \r\n");
+
+            op2 = moveOn.performOperation(op1, "B", "C");
+            System.out.println(op2);
+            System.out.println("\r\n ---- \r\n");
+
+            op3 = moveFromTable.performOperation(op2, "D", "B");
+            System.out.println(op3);
+            System.out.println("\r\n ---- \r\n");
+
+        } catch (CannotDoOperationException e) {
+            System.out.println(e.getMessage());
+        }
+
 
     }
 
