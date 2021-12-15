@@ -93,13 +93,14 @@
         </configuration>
         <executions>
           <execution>
+            <phase>validate</phase>
             <goals>
               <goal>check</goal>
             </goals>
           </execution>
         </executions>
       </plugin>
-  </plugins>
+    </plugins>
 
   </build>
 </project>
