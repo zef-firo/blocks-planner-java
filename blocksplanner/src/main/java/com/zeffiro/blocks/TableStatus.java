@@ -1,6 +1,7 @@
 package com.zeffiro.blocks;
 
 import java.util.HashMap;
+
 import com.zeffiro.exceptions.IllegalBlockException;
 
 public class TableStatus {
@@ -11,6 +12,43 @@ public class TableStatus {
         this.arrangement = new HashMap<String, Block>();
     }
 
+    public TableStatus(HashMap<String, Block> arr) {
+
+        HashMap<String, Block> clonedArr = new HashMap<String, Block>();
+
+        for (String lbl: arr.keySet()) {
+
+            if (clonedArr.containsKey(lbl) || !arr.get(lbl).isFree()) {
+                continue;
+            }
+
+            Block cloned = new Block(lbl);
+            clonedArr.put(cloned.getLabel(), cloned);
+
+            Block toCloneUnder = arr.get(lbl).getUnder();
+            Block over = cloned;
+
+            while (toCloneUnder != null) {
+
+                Block clonedUnder = new Block(toCloneUnder.getLabel());
+                clonedUnder.setOver(over);
+                clonedArr.put(clonedUnder.getLabel(), clonedUnder);
+
+                over = clonedUnder;
+                toCloneUnder = toCloneUnder.getUnder();
+
+            }
+
+        }
+
+        this.arrangement = clonedArr;
+    }
+
+    /**
+     * Adds a block to the status
+     * @param b the block to add
+     * @throws IllegalBlockException if table condition are violated
+     */
     public void addBlock(Block b) throws IllegalBlockException {
 
         //check if block underneath has me on top
@@ -32,6 +70,11 @@ public class TableStatus {
 
     }
 
+    /**
+     * Add more blocks at once
+     * @param arr an HashMap containing the blocks
+     * @throws IllegalBlockException if table condition are violated 
+     */
     public void addBlocks(HashMap<String, Block> arr) throws IllegalBlockException {
 
         for (String key: arr.keySet()) {
@@ -40,13 +83,21 @@ public class TableStatus {
 
     }
 
+    /**
+     * Get the current arrangement
+     * @return the HashMap containing all the blocks
+     */
+    public HashMap<String, Block> getArrangement() {
+        return this.arrangement;
+    }
+
     @Override
     public String toString() {
 
         HashMap<String, Block> printed = new HashMap<>();
         StringBuilder toReturn = new StringBuilder();
 
-        for (String key: this.arrangement.keySet()) {
+        for (String key: this.getArrangement().keySet()) {
 
             if (printed.containsKey(key)) {
                 continue;
