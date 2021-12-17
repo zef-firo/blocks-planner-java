@@ -125,4 +125,10 @@ public class TableStatus {
 
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return this.toString().equals(other.toString());
+    }
+
+
 }
