@@ -78,6 +78,15 @@ public class Block {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 7;
+        for (int i = 0; i < this.label.length(); i++) {
+            hash = hash * 31 + this.label.charAt(i);
+        }
+        return hash;
+    }
+
+    @Override
     public String toString() {
         return this.label;
     }
