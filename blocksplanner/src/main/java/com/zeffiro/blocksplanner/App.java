@@ -1,6 +1,6 @@
 package com.zeffiro.blocksplanner;
 
-import com.zeffiro.solver.AStarSolver;
+import com.zeffiro.solver.IterativeDeepening;
 
 /**
  * Hello world!
@@ -11,7 +11,7 @@ public class App
 
     public static void main( String[] args )
     {
-        AStarSolver solver = new AStarSolver();
+        IterativeDeepening solver = new IterativeDeepening();
         solver.solve();
     }
 
