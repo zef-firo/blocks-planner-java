@@ -21,7 +21,7 @@ public class AStarSolver extends Solver {
         this.toExplore = new PriorityQueue<WeightedNode>();
     }
 
-    public void solve() {
+    public boolean solve() {
         super.solve();
 
         this.solutionLeaf = null;
@@ -39,10 +39,12 @@ public class AStarSolver extends Solver {
         //print solution
         if (this.solutionLeaf == null) {
             System.out.println("No solution found for the arrangment.");
+            return false;
         }
         else {
             System.out.println("The solution is:\r\n");
             this.printSolution(this.solutionLeaf);
+            return true;
         }
 
     }
