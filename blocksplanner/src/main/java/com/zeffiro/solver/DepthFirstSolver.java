@@ -16,18 +16,14 @@ public class DepthFirstSolver extends Solver {
 
     private Integer limit;
 
-    public DepthFirstSolver() {
-        this(-1);
+    public boolean solve() {
+        return this.solve(-1);
     }
 
-    public DepthFirstSolver(Integer limit) {
-        super();
-        this.limit = limit;
-    }
-
-    public void solve() {
+    public boolean solve(Integer limit) {
         super.solve();
 
+        this.limit = limit;
         this.solutionLeaf = null;
 
         //set tree root
@@ -39,10 +35,12 @@ public class DepthFirstSolver extends Solver {
         //print solution
         if (this.solutionLeaf == null) {
             System.out.println("No solution found for the arrangment.");
+            return false;
         }
         else {
             System.out.println("The solution is:\r\n");
             this.printSolution(this.solutionLeaf);
+            return true;
         }
 
     }
@@ -75,7 +73,7 @@ public class DepthFirstSolver extends Solver {
     private void performSolution(Node n) {
 
         //check if path is over limit
-        if (this.limit > 0 && n.getPathLength() >= this.limit) {
+        if (this.limit >= 0 && n.getPathLength() >= this.limit) {
             return;
         }
 
