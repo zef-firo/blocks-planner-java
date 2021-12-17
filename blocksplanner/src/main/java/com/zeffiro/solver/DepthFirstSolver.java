@@ -107,7 +107,7 @@ public class DepthFirstSolver extends Solver {
 
             }
             catch (CannotDoOperationException ex) {
-                //
+                System.out.println("\r\nTried to do an impossible operation : " + op);
             }
         }
 

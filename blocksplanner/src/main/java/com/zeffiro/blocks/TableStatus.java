@@ -130,5 +130,16 @@ public class TableStatus {
         return this.toString().equals(other.toString());
     }
 
+    @Override
+    public int hashCode() {
+        String mapping = this.toString();
+        int hash = 7;
+        for (int i = 0; i < mapping.length(); i++) {
+            hash = hash * 31 + mapping.charAt(i);
+        }
+        return hash;
+
+    }
+
 
 }
