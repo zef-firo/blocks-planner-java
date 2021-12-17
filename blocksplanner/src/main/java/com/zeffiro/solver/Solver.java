@@ -20,11 +20,13 @@ public class Solver {
         this.populateFinal();
     }
 
-    protected void solve() {
+    protected boolean solve() {
         
         System.out.println("Initial status is:\r\n\r\n" + this.getInitial());
 
         System.out.println("\r\nFinal status is is:\r\n\r\n" + this.getFinal());
+
+        return true;
         
     }
 
