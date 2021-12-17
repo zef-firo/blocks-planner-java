@@ -125,6 +125,33 @@ public class TableStatus {
 
     }
 
+    public Integer diff(TableStatus other) {
+
+        Integer diff = 0;
+        for (String lbl : this.getArrangement().keySet()) {
+
+            Block thisB = this.getArrangement().get(lbl);
+
+            //check for block existance in other object
+            Block otherB = other.getArrangement().get(lbl);
+            if (otherB == null) {
+                diff++;
+                continue;
+            }
+
+            //check if under and over is the same
+            if ( otherB.getOver() != null && thisB.getOver() != null && otherB.getOver().equals(thisB.getOver()) ) {
+                diff++;
+            }
+            if ( otherB.getUnder() != null && thisB.getUnder() != null && otherB.getUnder().equals(thisB.getUnder()) ) {
+                diff++;
+            }
+
+        }
+        return diff;
+
+    }
+
     @Override
     public boolean equals(Object other) {
         return this.toString().equals(other.toString());
@@ -138,7 +165,6 @@ public class TableStatus {
             hash = hash * 31 + mapping.charAt(i);
         }
         return hash;
-
     }
 
 
