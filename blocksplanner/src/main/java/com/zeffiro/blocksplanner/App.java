@@ -1,5 +1,7 @@
 package com.zeffiro.blocksplanner;
 
+import com.zeffiro.solver.DepthFirstSolver;
+
 /**
  * Hello world!
  *
@@ -9,10 +11,8 @@ public class App
 
     public static void main( String[] args )
     {
-        
-        Solver solver = new Solver();
+        DepthFirstSolver solver = new DepthFirstSolver(2);
         solver.solve();
-
     }
 
 

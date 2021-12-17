@@ -6,21 +6,23 @@ import com.zeffiro.exceptions.CannotDoOperationException;
 
 public class MoveToTable extends Operation {
     
-    public MoveToTable() {
-        super("Move to table");
+    public static String name = "Move to table";
+
+    public MoveToTable(TableStatus status, Block b) {
+        super(status, b);
     }
 
-    public boolean canDo(Block b) {
-        return super.canDo(b) && b.isFree();
+    public static boolean canDo(Block b) {
+        return Operation.canDo(b) && b.isFree() && !b.isOnTable();
     }
 
-    public TableStatus performOperation(TableStatus status, String label) throws CannotDoOperationException {
+    public TableStatus performOperation() throws CannotDoOperationException {
         
-        TableStatus pStatus = super.performOperation(status, label);
+        TableStatus pStatus = super.performOperation();
         TableStatus nStatus = new TableStatus(pStatus.getArrangement());
 
         //move block to table
-        Block b = nStatus.getArrangement().get(label);
+        Block b = nStatus.getArrangement().get(this.operatingBlock.getLabel());
 
         b.getUnder().setOver(null);
         b.setUnder(null);
@@ -29,5 +31,9 @@ public class MoveToTable extends Operation {
 
     }
 
+    @Override
+    public String toString() {
+        return "Move " + this.operatingBlock.getLabel() + " to the table.";
+    }
 
 }

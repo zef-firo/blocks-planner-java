@@ -6,10 +6,14 @@ import com.zeffiro.exceptions.CannotDoOperationException;
 
 public class Operation {
     
-    public String name;
+    public static String name = "Operation";
 
-    public Operation(String name) {
-        this.name = name;
+    protected TableStatus operatingStatus;
+    protected Block operatingBlock;
+
+    protected Operation(TableStatus status, Block b) {
+        this.operatingStatus = status;
+        this.operatingBlock = b;
     }
 
     /**
@@ -17,7 +21,7 @@ public class Operation {
      * @param b the block
      * @return wether the operation can be done or not
      */
-    public boolean canDo(Block b) {
+    public static boolean canDo(Block b) {
         return b != null;
     }
 
@@ -28,20 +32,19 @@ public class Operation {
      * @return the new status produced
      * @throws CannotDoOperationException if this operation cannot be performed on the block
      */
-    public TableStatus performOperation(TableStatus status, String label) throws CannotDoOperationException {
+    public TableStatus performOperation() throws CannotDoOperationException {
 
-        Block b = status.getArrangement().get(label);
-        if (b == null || !this.canDo(b)) {
-            throw new CannotDoOperationException("Cannot to the operation '" + this + "' to block " + label);
+        if (this.operatingBlock == null || !Operation.canDo(this.operatingBlock)) {
+            throw new CannotDoOperationException("Cannot to the operation '" + this + "' to block " + this.operatingBlock.getLabel());
         }
 
-        return status;
+        return this.operatingStatus;
 
     }
 
     @Override
     public String toString() {
-        return this.name;
+        return Operation.name + " performed on " + this.operatingBlock.getLabel();
     }
 
 }

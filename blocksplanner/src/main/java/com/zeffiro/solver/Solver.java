@@ -1,52 +1,31 @@
-package com.zeffiro.blocksplanner;
+package com.zeffiro.solver;
+
+import java.util.HashMap;
 
 import com.zeffiro.blocks.Block;
 import com.zeffiro.blocks.TableStatus;
-import com.zeffiro.exceptions.CannotDoOperationException;
 import com.zeffiro.exceptions.IllegalBlockException;
 import com.zeffiro.operations.MoveFromTable;
 import com.zeffiro.operations.MoveOn;
 import com.zeffiro.operations.MoveToTable;
+import com.zeffiro.operations.Operation;
 
 public class Solver {
 
-    private TableStatus initialStatus;
-    private TableStatus finalStatus;
+    protected TableStatus initialStatus;
+    protected TableStatus finalStatus;
 
     public Solver() {
         this.populateInitial();
         this.populateFinal();
     }
 
-    public void solve() {
-
-        System.out.println(this.getInitial());
+    protected void solve() {
         
-        System.out.println("\r\n Trying operations \r\n");
+        System.out.println("Initial status is:\r\n\r\n" + this.getInitial());
 
-        MoveToTable moveToTable = new MoveToTable();
-        MoveOn moveOn = new MoveOn();
-        MoveFromTable moveFromTable = new MoveFromTable();
+        System.out.println("\r\nFinal status is is:\r\n\r\n" + this.getFinal());
         
-        TableStatus op1, op2, op3;
-        try {
-            op1 = moveToTable.performOperation(this.initialStatus, "C");
-            System.out.println(op1);
-            System.out.println("\r\n ---- \r\n");
-
-            op2 = moveOn.performOperation(op1, "B", "C");
-            System.out.println(op2);
-            System.out.println("\r\n ---- \r\n");
-
-            op3 = moveFromTable.performOperation(op2, "D", "B");
-            System.out.println(op3);
-            System.out.println("\r\n ---- \r\n");
-
-        } catch (CannotDoOperationException e) {
-            System.out.println(e.getMessage());
-        }
-
-
     }
 
     private void populateInitial() {
@@ -82,7 +61,6 @@ public class Solver {
 
         d.setOver(c);
         c.setOver(b);
-        b.setOver(a);
 
         this.finalStatus = new TableStatus();
 
@@ -95,6 +73,27 @@ public class Solver {
         catch (IllegalBlockException ex) {
             System.out.println("Impossibile popolare lo stato finale: " + ex.getMessage());
         }
+
+    }
+
+    protected HashMap<String, Operation> getPossibleOperations(TableStatus status, Block f, Block t) {
+
+        HashMap<String, Operation> possible = new HashMap<String, Operation>();
+
+        if (MoveFromTable.canDo(f, t)) {
+            MoveFromTable nMFT = new MoveFromTable(status, f, t);
+            possible.put(nMFT.toString(), nMFT);
+        }
+        if (MoveOn.canDo(f, t)) {
+            MoveOn nMO = new MoveOn(status, f, t);
+            possible.put(nMO.toString(), nMO);
+        }
+        if (MoveToTable.canDo(f)) {
+            MoveToTable nMTT = new MoveToTable(status, f);
+            possible.put(nMTT.toString(), nMTT);
+        }
+        
+        return possible;
 
     }
 
