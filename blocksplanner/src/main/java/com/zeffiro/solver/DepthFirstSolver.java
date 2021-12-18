@@ -1,5 +1,6 @@
 package com.zeffiro.solver;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -11,17 +12,33 @@ import com.zeffiro.tree.Node;
 
 public class DepthFirstSolver extends Solver {
 
+    public static int MAX_LENGTH = 50;
+
     private Node solverTree;
     private Node solutionLeaf;
 
     private Integer limit;
 
+    public DepthFirstSolver(TableStatus initial, TableStatus goal) {
+        super(initial, goal);
+    }
+
+    public DepthFirstSolver(TableStatus initial, TableStatus goal, boolean doPrint) {
+        super(initial, goal, doPrint);
+    }
+    
     public boolean solve() {
         return this.solve(-1);
     }
 
     public boolean solve(Integer limit) {
-        super.solve();
+        
+        if (super.solve()) {
+            if (this.doPrint()) {
+                System.out.println("The initial and final statuses are identical! Nothing to do.");
+            }
+            return true;
+        }
 
         this.limit = limit;
         this.solutionLeaf = null;
@@ -31,15 +48,20 @@ public class DepthFirstSolver extends Solver {
 
         //solve
         this.performSolution(this.solverTree);
+        this.end = Instant.now();
 
         //print solution
         if (this.solutionLeaf == null) {
-            System.out.println("No solution found for the arrangment.");
+            if (this.doPrint()) {
+                System.out.println("No solution found for the arrangment.");
+            }
             return false;
         }
         else {
-            System.out.println("The solution is:\r\n");
-            this.printSolution(this.solutionLeaf);
+            if (this.doPrint()) {
+                System.out.println("The solution is:\r\n");
+                this.printSolution(this.solutionLeaf);
+            }
             return true;
         }
 
@@ -72,8 +94,12 @@ public class DepthFirstSolver extends Solver {
 
     private void performSolution(Node n) {
 
+        if (this.timeIsOut()) {
+            return;
+        }
+
         //check if path is over limit
-        if (this.limit >= 0 && n.getPathLength() >= this.limit) {
+        if ( this.limit >= 0 && n.getPathLength() >= this.limit || n.getPathLength() >= DepthFirstSolver.MAX_LENGTH ) {
             return;
         }
 

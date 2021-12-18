@@ -1,10 +1,11 @@
 package com.zeffiro.solver;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashMap;
 
 import com.zeffiro.blocks.Block;
 import com.zeffiro.blocks.TableStatus;
-import com.zeffiro.exceptions.IllegalBlockException;
 import com.zeffiro.operations.MoveFromTable;
 import com.zeffiro.operations.MoveOn;
 import com.zeffiro.operations.MoveToTable;
@@ -12,70 +13,38 @@ import com.zeffiro.operations.Operation;
 
 public class Solver {
 
+    public static int MAX_EXECUTION_SECONDS = 20;
     protected TableStatus initialStatus;
     protected TableStatus finalStatus;
+    private boolean doPrint;
+    protected Instant start;
+    protected Instant end;
 
-    public Solver() {
-        this.populateInitial();
-        this.populateFinal();
+    public Solver(TableStatus initial, TableStatus goal) {
+        this(initial, goal, true);
     }
 
-    protected boolean solve() {
+    public Solver(TableStatus initial, TableStatus goal, boolean doPrint) {
+        this.initialStatus = initial;
+        this.finalStatus = goal;
+        this.doPrint = doPrint;
+        this.start = Instant.now();
+    }
+
+    public boolean solve() {
         
-        System.out.println("Initial status is:\r\n\r\n" + this.getInitial());
+        if (this.timeIsOut()) {
+            return false;
+        }
 
-        System.out.println("\r\nFinal status is is:\r\n\r\n" + this.getFinal());
+        if (this.doPrint()) {
+            System.out.println("Initial status is:\r\n\r\n" + this.getInitial());
+            System.out.println("\r\nFinal status is is:\r\n\r\n" + this.getFinal());
+        }
+        this.end = Instant.now();
 
-        return true;
+        return this.getInitial().equals(this.getFinal());
         
-    }
-
-    private void populateInitial() {
-
-        Block a = new Block("A");
-        Block b = new Block("B");
-        Block c = new Block("C");
-        Block d = new Block("D");
-
-        a.setOver(b);
-        b.setOver(c);
-
-        this.initialStatus = new TableStatus();
-
-        try {
-            this.initialStatus.addBlock(a);
-            this.initialStatus.addBlock(b);
-            this.initialStatus.addBlock(c);
-            this.initialStatus.addBlock(d);
-        }
-        catch (IllegalBlockException ex) {
-            System.out.println("Impossibile popolare lo stato iniziale: " + ex.getMessage());
-        }
-
-    }
-
-    private void populateFinal() {
-
-        Block a = new Block("A");
-        Block b = new Block("B");
-        Block c = new Block("C");
-        Block d = new Block("D");
-
-        d.setOver(c);
-        c.setOver(b);
-
-        this.finalStatus = new TableStatus();
-
-        try {
-            this.finalStatus.addBlock(a);
-            this.finalStatus.addBlock(b);
-            this.finalStatus.addBlock(c);
-            this.finalStatus.addBlock(d);
-        }
-        catch (IllegalBlockException ex) {
-            System.out.println("Impossibile popolare lo stato finale: " + ex.getMessage());
-        }
-
     }
 
     protected HashMap<String, Operation> getPossibleOperations(TableStatus status, Block f, Block t) {
@@ -105,6 +74,19 @@ public class Solver {
 
     public TableStatus getFinal() {
         return this.finalStatus;
+    }
+
+    public boolean doPrint() {
+        return this.doPrint;
+    }
+
+    public Duration getDuration() {
+        return Duration.between(start, end);
+    }
+
+    public boolean timeIsOut() {
+        this.end = Instant.now();
+        return this.getDuration().getSeconds() >= Solver.MAX_EXECUTION_SECONDS;
     }
     
 }

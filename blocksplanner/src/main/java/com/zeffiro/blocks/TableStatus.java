@@ -1,6 +1,7 @@
 package com.zeffiro.blocks;
 
 import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.zeffiro.exceptions.IllegalBlockException;
 
@@ -153,6 +154,35 @@ public class TableStatus {
         otherCopy.getArrangement().keySet().removeAll(this.getArrangement().keySet());
 
         return diff + otherCopy.getArrangement().size();
+
+    }
+
+    public static TableStatus randomGen(int size) throws IllegalBlockException {
+
+        TableStatus toRet = new TableStatus();
+        HashMap<String, Block> freeBlocks = new HashMap<>();
+
+        for (int i = 0; i < size; i++) {
+            //generate a new block
+            Block b = new Block(String.valueOf(i));
+            //random choose if stay on table or on another block
+            if (ThreadLocalRandom.current().nextInt(0, 2) > 0 && freeBlocks.size() > 0) {
+                //position on block
+                //randomly choose a block
+                int lblPos = ThreadLocalRandom.current().nextInt(0, freeBlocks.size());
+                String lblVal = (String)freeBlocks.keySet().toArray()[lblPos];
+                Block t = freeBlocks.get(lblVal);
+                t.setOver(b);
+                //remove t from freeblocks
+                freeBlocks.remove(lblVal);
+            }
+
+            freeBlocks.put(b.getLabel(), b);
+            toRet.addBlock(b);
+
+        }
+        
+        return toRet;
 
     }
 

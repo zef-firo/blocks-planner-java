@@ -1,5 +1,6 @@
 package com.zeffiro.solver;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.PriorityQueue;
@@ -16,14 +17,25 @@ public class AStarSolver extends Solver {
     private WeightedNode solutionLeaf;
     private PriorityQueue<WeightedNode> toExplore;
 
-    public AStarSolver() {
-        super();
+    public AStarSolver(TableStatus initial, TableStatus goal) {
+        super(initial, goal);
+        this.toExplore = new PriorityQueue<WeightedNode>();
+    }
+
+    public AStarSolver(TableStatus initial, TableStatus goal, boolean doPrint) {
+        super(initial, goal, doPrint);
         this.toExplore = new PriorityQueue<WeightedNode>();
     }
 
     public boolean solve() {
-        super.solve();
 
+        if (super.solve()) {
+            if (this.doPrint()) {
+                System.out.println("The initial and final statuses are identical! Nothing to do.");
+            }
+            return true;
+        }
+        
         this.solutionLeaf = null;
 
         //set tree root
@@ -32,18 +44,27 @@ public class AStarSolver extends Solver {
 
         WeightedNode head = this.toExplore.poll();
         while (this.solutionLeaf == null && head != null) {
+            if (this.timeIsOut()) {
+                break;
+            }    
             this.performSolution(head);
             head = this.toExplore.poll();
         }
 
+        this.end = Instant.now();
+
         //print solution
         if (this.solutionLeaf == null) {
-            System.out.println("No solution found for the arrangment.");
+            if (this.doPrint()) {
+                System.out.println("No solution found for the arrangment.");
+            }
             return false;
         }
         else {
-            System.out.println("The solution is:\r\n");
-            this.printSolution(this.solutionLeaf);
+            if (this.doPrint()) {
+                System.out.println("The solution is:\r\n");
+                this.printSolution(this.solutionLeaf);
+            }
             return true;
         }
 

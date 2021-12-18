@@ -72,4 +72,10 @@ public class TableStatusTest {
         assertTrue(!st.equals(st2), "Pointer independance");
     }
 
+    @Test
+    public void randomGeneration() throws IllegalBlockException
+    {
+        TableStatus st = TableStatus.randomGen(50);
+        assertTrue(st.getArrangement().size() == 50, "Random generation");
+    }
 }
