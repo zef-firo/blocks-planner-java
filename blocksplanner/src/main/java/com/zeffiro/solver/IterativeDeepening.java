@@ -8,14 +8,16 @@ public class IterativeDeepening {
         this.solver = new DepthFirstSolver();
     }
 
-    public void solve() {
+    public boolean solve() {
 
         for (int depth = 0; depth < (this.solver.initialStatus.getArrangement().size() ^ 2); depth++) {
             System.out.println("\r\n -- \r\nTRYING WITH DEPTH: " + depth + "\r\n");
             if (this.solver.solve(depth)) {
-                return;
+                return true;
             }
         }
+
+        return false;
 
     }
     

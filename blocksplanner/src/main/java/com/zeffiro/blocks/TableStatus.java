@@ -148,7 +148,11 @@ public class TableStatus {
             }
 
         }
-        return diff;
+
+        TableStatus otherCopy = new TableStatus(other.getArrangement());
+        otherCopy.getArrangement().keySet().removeAll(this.getArrangement().keySet());
+
+        return diff + otherCopy.getArrangement().size();
 
     }
 
