@@ -22,7 +22,60 @@ public class App
         String option = "start";
         while (!option.equals("q")) {
 
-            App.printMenu();
+            App.printMainMenu();
+            option = App.getInput();
+
+            switch (option) {
+                case "1":
+                    App.printTest();
+                    break;
+                case "2":
+                    App.printBenchmark();
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        App.printGoodbye();
+
+    }
+
+    public static void printBenchmark() {
+
+        App.printTitle("WELCOME TO THE BENCHMARK SECTION!");
+
+        String exit = "n";
+        while (!exit.equals("y")) {
+        
+            App.printBenchmarkMenu();
+            
+            System.out.println("LIMIT:");
+            String limit = App.getInput();
+
+            System.out.println("STEP:");
+            String step = App.getInput();
+
+            BenchMark benchmark = new BenchMark(Integer.parseInt(limit), Integer.parseInt(step));
+            benchmark.perform();
+            benchmark.printTable();
+
+            System.out.println("\r\nExit? (y/n)");
+            exit = App.getInput();
+        
+        }
+
+    }
+
+    public static void printTest() {
+
+        App.printTitle("WELCOME TO THE TEST SECTION!");
+
+        String option = "start";
+        while (!option.equals("q")) {
+
+            App.printTestMenu();
             option = App.getInput();
 
             try {
@@ -62,8 +115,6 @@ public class App
 
         }
 
-        App.printGoodbye();
-
     }
 
     public static void printTitle(String title) {
@@ -101,8 +152,15 @@ public class App
 
     }
 
-    public static void printMenu() {
-        System.out.println("\r\nChoose one algorithm to execute:\r\n");
+    public static void printMainMenu() {
+        App.printTitle("WHAT DO YOU WANT TO DO?");
+        System.out.println("1) Just a simple test\r\n");
+        System.out.println("2) Benchmark!\r\n");
+        System.out.println("q) exit\r\n");
+    }
+
+    public static void printTestMenu() {
+        App.printTitle("CHOOSE ONE ALGORITHM TO EXECUTE");
         System.out.println("1) Depth first algorithm\r\n");
         System.out.println("2) Breath first algorithm\r\n");
         System.out.println("3) A star algorithm\r\n");
@@ -110,6 +168,11 @@ public class App
         System.out.println("q) exit\r\n");
     }
 
+    public static void printBenchmarkMenu() {
+        App.printTitle("CHOOSE LIMIT AND STEP FOR TESTS");
+    }
+
+    
     public static TableStatus getTestInitial() throws IllegalBlockException {
 
         Block a = new Block("A");
