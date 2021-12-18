@@ -24,7 +24,7 @@ public class SolverTest {
     @Test
     public void testSolver()
     {
-        Solver solver = new Solver(this.init, this.goal);
+        Solver solver = new Solver(this.init, this.init);
         assertTrue(solver.solve() , "Test solver" );
     }
 
