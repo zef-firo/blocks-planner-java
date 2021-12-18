@@ -17,8 +17,13 @@ public class BreadthFirstSolver extends Solver {
     private Node solutionLeaf;
     private Queue<Node> toExplore;
 
-    public BreadthFirstSolver() {
-        super();
+    public BreadthFirstSolver(TableStatus initial, TableStatus goal) {
+        super(initial, goal);
+        this.toExplore = new LinkedList<Node>();
+    }
+
+    public BreadthFirstSolver(TableStatus initial, TableStatus goal, boolean doPrint) {
+        super(initial, goal, doPrint);
         this.toExplore = new LinkedList<Node>();
     }
 

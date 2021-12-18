@@ -1,11 +1,17 @@
 package com.zeffiro.solver;
 
+import com.zeffiro.blocks.TableStatus;
+
 public class IterativeDeepening {
 
     private DepthFirstSolver solver;
 
-    public IterativeDeepening() {
-        this.solver = new DepthFirstSolver();
+    public IterativeDeepening(TableStatus initial, TableStatus goal) {
+        this(initial, goal, true);
+    }
+
+    public IterativeDeepening(TableStatus initial, TableStatus goal, boolean doPrint) {
+        this.solver = new DepthFirstSolver(initial, goal, doPrint);
     }
 
     public boolean solve() {

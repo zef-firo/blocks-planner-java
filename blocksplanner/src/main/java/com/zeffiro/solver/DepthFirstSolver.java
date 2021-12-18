@@ -16,6 +16,14 @@ public class DepthFirstSolver extends Solver {
 
     private Integer limit;
 
+    public DepthFirstSolver(TableStatus initial, TableStatus goal) {
+        super(initial, goal);
+    }
+
+    public DepthFirstSolver(TableStatus initial, TableStatus goal, boolean doPrint) {
+        super(initial, goal, doPrint);
+    }
+    
     public boolean solve() {
         return this.solve(-1);
     }

@@ -16,8 +16,13 @@ public class AStarSolver extends Solver {
     private WeightedNode solutionLeaf;
     private PriorityQueue<WeightedNode> toExplore;
 
-    public AStarSolver() {
-        super();
+    public AStarSolver(TableStatus initial, TableStatus goal) {
+        super(initial, goal);
+        this.toExplore = new PriorityQueue<WeightedNode>();
+    }
+
+    public AStarSolver(TableStatus initial, TableStatus goal, boolean doPrint) {
+        super(initial, goal, doPrint);
         this.toExplore = new PriorityQueue<WeightedNode>();
     }
 
