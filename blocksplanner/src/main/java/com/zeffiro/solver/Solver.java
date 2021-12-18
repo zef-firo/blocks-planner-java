@@ -1,5 +1,7 @@
 package com.zeffiro.solver;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashMap;
 
 import com.zeffiro.blocks.Block;
@@ -11,9 +13,12 @@ import com.zeffiro.operations.Operation;
 
 public class Solver {
 
+    public static int MAX_EXECUTION_SECONDS = 20;
     protected TableStatus initialStatus;
     protected TableStatus finalStatus;
     private boolean doPrint;
+    protected Instant start;
+    protected Instant end;
 
     public Solver(TableStatus initial, TableStatus goal) {
         this(initial, goal, true);
@@ -23,16 +28,22 @@ public class Solver {
         this.initialStatus = initial;
         this.finalStatus = goal;
         this.doPrint = doPrint;
+        this.start = Instant.now();
     }
 
-    protected boolean solve() {
+    public boolean solve() {
         
+        if (this.timeIsOut()) {
+            return false;
+        }
+
         if (this.doPrint()) {
             System.out.println("Initial status is:\r\n\r\n" + this.getInitial());
             System.out.println("\r\nFinal status is is:\r\n\r\n" + this.getFinal());
         }
+        this.end = Instant.now();
 
-        return true;
+        return this.getInitial().equals(this.getFinal());
         
     }
 
@@ -67,6 +78,15 @@ public class Solver {
 
     public boolean doPrint() {
         return this.doPrint;
+    }
+
+    public Duration getDuration() {
+        return Duration.between(start, end);
+    }
+
+    public boolean timeIsOut() {
+        this.end = Instant.now();
+        return this.getDuration().getSeconds() >= Solver.MAX_EXECUTION_SECONDS;
     }
     
 }

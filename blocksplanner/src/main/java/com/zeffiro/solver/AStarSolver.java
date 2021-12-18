@@ -1,5 +1,6 @@
 package com.zeffiro.solver;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.PriorityQueue;
@@ -27,8 +28,14 @@ public class AStarSolver extends Solver {
     }
 
     public boolean solve() {
-        super.solve();
 
+        if (super.solve()) {
+            if (this.doPrint()) {
+                System.out.println("The initial and final statuses are identical! Nothing to do.");
+            }
+            return true;
+        }
+        
         this.solutionLeaf = null;
 
         //set tree root
@@ -37,9 +44,14 @@ public class AStarSolver extends Solver {
 
         WeightedNode head = this.toExplore.poll();
         while (this.solutionLeaf == null && head != null) {
+            if (this.timeIsOut()) {
+                break;
+            }    
             this.performSolution(head);
             head = this.toExplore.poll();
         }
+
+        this.end = Instant.now();
 
         //print solution
         if (this.solutionLeaf == null) {
