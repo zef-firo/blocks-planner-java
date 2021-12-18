@@ -14,17 +14,24 @@ public class Solver {
 
     protected TableStatus initialStatus;
     protected TableStatus finalStatus;
+    private boolean doPrint;
 
     public Solver() {
+        this(true);
+    }
+
+    public Solver(boolean doPrint) {
+        this.doPrint = doPrint;
         this.populateInitial();
         this.populateFinal();
     }
 
     protected boolean solve() {
         
-        System.out.println("Initial status is:\r\n\r\n" + this.getInitial());
-
-        System.out.println("\r\nFinal status is is:\r\n\r\n" + this.getFinal());
+        if (this.doPrint()) {
+            System.out.println("Initial status is:\r\n\r\n" + this.getInitial());
+            System.out.println("\r\nFinal status is is:\r\n\r\n" + this.getFinal());
+        }
 
         return true;
         
@@ -105,6 +112,10 @@ public class Solver {
 
     public TableStatus getFinal() {
         return this.finalStatus;
+    }
+
+    public boolean doPrint() {
+        return this.doPrint;
     }
     
 }

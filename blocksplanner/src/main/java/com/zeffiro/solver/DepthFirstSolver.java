@@ -34,12 +34,16 @@ public class DepthFirstSolver extends Solver {
 
         //print solution
         if (this.solutionLeaf == null) {
-            System.out.println("No solution found for the arrangment.");
+            if (this.doPrint()) {
+                System.out.println("No solution found for the arrangment.");
+            }
             return false;
         }
         else {
-            System.out.println("The solution is:\r\n");
-            this.printSolution(this.solutionLeaf);
+            if (this.doPrint()) {
+                System.out.println("The solution is:\r\n");
+                this.printSolution(this.solutionLeaf);
+            }
             return true;
         }
 
