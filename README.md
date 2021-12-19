@@ -1,6 +1,6 @@
 # Java Blocks Planner
 
-This is a Java cli software that plans block rearrangement to apply on an initial blocks position to get the desired arrangement.
+This is a Java cli software that plans a block rearrangement to apply on an initial blocks position to get the desired arrangement.
 
 ----
 
@@ -51,7 +51,7 @@ Please type your preference:
 
 Executes an algorithm of your choise to a predefined blocks configuration *(verified to be solvable by me)*.
 
-If you don't trust me, this is the initial configuration:
+If you don't trust me (and you would be usually right), this is the initial configuration:
 
 <pre>
 A | B | C | 
