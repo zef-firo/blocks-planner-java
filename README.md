@@ -2,6 +2,7 @@
 
 This is a Java cli software that plans a block rearrangement to apply on an initial blocks position to get the desired arrangement.
 
+
 ----
 
 ## How to run
