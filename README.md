@@ -34,7 +34,7 @@ Then:
 
 ## How it works
 
-Firtly the software asks you wht to do:
+Firstly the software asks you what to do:
 
 <pre>
 1) Just a simple test
