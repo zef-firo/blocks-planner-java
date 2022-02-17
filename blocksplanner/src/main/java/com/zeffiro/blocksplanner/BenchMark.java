@@ -10,6 +10,7 @@ import com.zeffiro.solver.AStarSolver;
 import com.zeffiro.solver.BreadthFirstSolver;
 import com.zeffiro.solver.DepthFirstSolver;
 import com.zeffiro.solver.IterativeDeepening;
+import com.zeffiro.solver.CustomAStarSolver;
 import com.zeffiro.solver.Solver;
 
 public class BenchMark {
@@ -54,8 +55,9 @@ public class BenchMark {
 
         toRet.put("DepthFirstSolver", new DepthFirstSolver(i, g, false));
         toRet.put("BreadthFirstSolver", new BreadthFirstSolver(i, g, false));
-        toRet.put("AStarSolver", new AStarSolver(i, g, false));
         toRet.put("IterativeDeepening", new IterativeDeepening(i, g, false));
+        toRet.put("AStarSolver", new AStarSolver(i, g, false));
+        toRet.put("CustomAStarSolver", new CustomAStarSolver(i, g, false));
 
         return toRet;
 

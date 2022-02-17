@@ -13,7 +13,7 @@ import com.zeffiro.operations.Operation;
 
 public class Solver {
 
-    public static int MAX_EXECUTION_SECONDS = 5;
+    public static int MAX_EXECUTION_SECONDS = 10;
     protected TableStatus initialStatus;
     protected TableStatus finalStatus;
     private boolean doPrint;

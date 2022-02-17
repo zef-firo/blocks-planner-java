@@ -8,6 +8,7 @@ import com.zeffiro.blocks.Block;
 import com.zeffiro.blocks.TableStatus;
 import com.zeffiro.exceptions.IllegalBlockException;
 import com.zeffiro.solver.AStarSolver;
+import com.zeffiro.solver.CustomAStarSolver;
 import com.zeffiro.solver.BreadthFirstSolver;
 import com.zeffiro.solver.DepthFirstSolver;
 import com.zeffiro.solver.IterativeDeepening;
@@ -103,6 +104,11 @@ public class App
                         IterativeDeepening iterativedeepsolver = new IterativeDeepening(init,goal);
                         iterativedeepsolver.solve();
                         break;
+                    case "5":
+                        App.printTitle("CUSTOM A STAR");
+                        CustomAStarSolver customastarsolver = new CustomAStarSolver(init,goal);
+                        customastarsolver.solve();
+                        break;
                     default:
                         break;
                 }
@@ -165,6 +171,7 @@ public class App
         System.out.println("2) Breath first algorithm\r\n");
         System.out.println("3) A star algorithm\r\n");
         System.out.println("4) Iterative deepening algorithm\r\n");
+        System.out.println("5) Custom A star algorithm\r\n");
         System.out.println("q) exit\r\n");
     }
 
